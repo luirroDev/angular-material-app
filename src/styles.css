@@ -10,3 +10,9 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* Cambiar el color de fondo y el color del texto del MatSnackBar */
+.mat-snack-bar-container {
+  background-color: #673ab7;
+  color: aliceblue;
+}

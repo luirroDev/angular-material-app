@@ -5,16 +5,25 @@
       alt="login-user-image"
       width="50%"
     />
-    <h2>Iniciar Sesión</h2>
-    <mat-form-field>
-      <mat-label>User</mat-label>
-      <input matInput type="text" autocomplete="off" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput type="password" />
-    </mat-form-field>
-    <br />
-    <button mat-raised-button color="primary">Login</button>
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <h2>Iniciar Sesión</h2>
+      <mat-form-field>
+        <mat-label>User</mat-label>
+        <input matInput type="text" autocomplete="off" formControlName="user" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+      <br />
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Login
+      </button>
+    </form>
   </div>
 </div>
