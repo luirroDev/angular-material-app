@@ -1,5 +1,8 @@
 <div class="container">
   <div class="login">
+    @if (loading) {
+    <mat-spinner class="spinner"></mat-spinner>
+    } @else {
     <img
       src="./assets/images/login-image.png"
       alt="login-user-image"
@@ -25,5 +28,6 @@
         Login
       </button>
     </form>
+    }
   </div>
 </div>

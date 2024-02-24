@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +22,14 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonModule,
     MatSnackBarModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   form: FormGroup;
+  loading = false;
 
   constructor(private fb: FormBuilder, private _snackBar: MatSnackBar) {
     this.form = this.fb.group({
@@ -36,12 +39,14 @@ export class LoginComponent {
   }
 
   public login() {
-    const user = this.form.value.user;
-    const password = this.form.value.password;
+    const user: string = this.form.value.user;
+    const password: string = this.form.value.password;
 
     if (user === 'admin' && password === 'admin') {
       // redirect
+      this.fakeLoading();
     } else {
+      // Throw an error message
       this.errorHandler();
     }
   }
@@ -52,5 +57,17 @@ export class LoginComponent {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
+
+    this.form.reset({
+      user: '',
+      password: '',
+    });
+  }
+
+  private fakeLoading() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 1500);
   }
 }
