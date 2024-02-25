@@ -1,1 +1,17 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary">
+  <span>AppUsers</span>
+  <div class="central-buttons">
+    <button mat-button routerLink="/dashboard">Dashboard</button>
+    <button mat-button routerLink="/dashboard/users">Users</button>
+    <button mat-button routerLink="/dashboard/reports">Report</button>
+  </div>
+  <button
+    mat-icon-button
+    aria-hidden="false"
+    aria-label="Cerrar sesión"
+    type="button"
+    routerLink="logout"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>
