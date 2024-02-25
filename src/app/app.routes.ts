@@ -8,12 +8,19 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '**',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./components/dashboard/dashboard.module').then(
+        (m) => m.DashboardModule
+      ),
   },
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
 ];

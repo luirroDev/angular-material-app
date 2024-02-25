@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,11 @@ export class LoginComponent {
   form: FormGroup;
   loading = false;
 
-  constructor(private fb: FormBuilder, private _snackBar: MatSnackBar) {
+  constructor(
+    private fb: FormBuilder,
+    private _snackBar: MatSnackBar,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       user: ['', Validators.required],
       password: ['', Validators.required],
@@ -67,7 +72,7 @@ export class LoginComponent {
   private fakeLoading() {
     this.loading = true;
     setTimeout(() => {
-      this.loading = false;
+      this.router.navigate(['dashboard']);
     }, 1500);
   }
 }
