@@ -1,4 +1,19 @@
 mat-toolbar {
-  margin-bottom: 5px;
+  margin-bottom: 0.75rem;
   border-radius: 1rem;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 54px;
+}
+.search {
+  color: #1f516f;
+}
+.edit {
+  color: #1878b0;
+}
+.delete {
+  color: #e15639;
 }
