@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 import { MenuService } from '../../../services/menu.service';
 
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Menu } from '../../../interfaces/menu.interface';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',

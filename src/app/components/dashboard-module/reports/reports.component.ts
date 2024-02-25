@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [],
+  imports: [MatToolbarModule],
   templateUrl: './reports.component.html',
-  styleUrl: './reports.component.css'
+  styleUrl: './reports.component.css',
 })
-export class ReportsComponent {
-
-}
+export class ReportsComponent {}
