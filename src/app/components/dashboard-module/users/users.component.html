@@ -24,19 +24,21 @@
 
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef style="text-align: center">
-      Editar / Eliminar
+      Acciones
     </th>
     <td mat-cell *matCellDef="let element" class="actions">
       <button
         mat-icon-button
+        matTooltip="Ver"
         aria-hidden="false"
-        aria-label="Editar"
+        aria-label="Ver"
         class="search"
       >
         <mat-icon>search</mat-icon>
       </button>
       <button
         mat-icon-button
+        matTooltip="Editar"
         aria-hidden="false"
         aria-label="Editar"
         class="edit"
@@ -45,8 +47,9 @@
       </button>
       <button
         mat-icon-button
+        matTooltip="Eliminar"
         aria-hidden="false"
-        aria-label="Editar"
+        aria-label="Eliminar"
         class="delete"
       >
         <mat-icon>delete</mat-icon>
