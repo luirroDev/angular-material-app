@@ -21,14 +21,30 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatInputModule,
   ],
-  templateUrl: './users.component.html',
-  styleUrl: './users.component.css',
+  templateUrl: './orden-ingreso.component.html',
+  styleUrl: './orden-ingreso.component.css',
 })
-export class UsersComponent {
+export class OrdenIngresoComponent {
   displayedColumns: string[] = ['user', 'name', 'lastName', 'sex', 'actions'];
   userList: user[] = [
     { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
     { user: 'jperez', name: 'Alexander', lastName: 'Diaz', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
     { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
     { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
     { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },

@@ -1,3 +1,21 @@
 .container {
-  margin: 5px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 4fr; /* Ajusta los valores acorde al tamanno en pantalla*/
+  grid-template-rows: auto; /* Asegura que las filas se ajusten al contenido */
+  grid-template-areas:
+    "navbar navbar navbar"
+    "aside main main";
+}
+
+app-navbar {
+  grid-area: navbar;
+  width: 100%; /* Asegura que el navbar ocupe todo el ancho disponible */
+}
+
+aside {
+  grid-area: aside;
+}
+
+main {
+  grid-area: main;
 }

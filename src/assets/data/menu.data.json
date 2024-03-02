@@ -1,14 +1,17 @@
 [
   {
-    "nombre": "Dashboard",
-    "redirect": "/dashboard"
+    "nombre": "Pantalla Principal",
+    "redirect": "/dashboard",
+    "icon": "home"
   },
   {
-    "nombre": "Users",
-    "redirect": "/dashboard/users"
+    "nombre": "Ordenes de Ingreso",
+    "redirect": "/dashboard/orden-ingreso",
+    "icon": "assignment"
   },
   {
-    "nombre": "Reports",
-    "redirect": "/dashboard/reports"
+    "nombre": "Usuario",
+    "redirect": "/dashboard/reports",
+    "icon": "person"
   }
 ]

@@ -1,10 +1,5 @@
 <mat-toolbar color="primary">
   <span>AppUsers</span>
-  <div class="central-buttons">
-    @if (menuItems$ | async; as menu) { @for (item of menu; track $index) {
-    <button mat-button [routerLink]="item.redirect">{{ item.nombre }}</button>
-    } }
-  </div>
   <button
     mat-icon-button
     aria-hidden="false"

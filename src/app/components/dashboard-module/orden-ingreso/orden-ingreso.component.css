@@ -4,7 +4,7 @@
 }
 mat-toolbar {
   margin-bottom: 0.75rem;
-  border-radius: 1rem;
+  border-radius: 0 0 8px 8px;
   display: flex;
   justify-content: space-between;
 }
@@ -26,4 +26,17 @@ mat-form-field {
 }
 .delete {
   color: #e15639;
+}
+.add-button {
+  position: fixed;
+  top: 85%;
+  left: 90%;
+  color: rgb(56, 201, 68);
+  width: 100px;
+  height: 100px;
+}
+.add-button mat-icon {
+  font-size: 45px;
+  width: auto;
+  height: auto;
 }
