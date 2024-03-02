@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+mat-toolbar {
+  margin-bottom: 0.75rem;
+  border-radius: 0 0 8px 8px;
+  display: flex;
+  justify-content: space-between;
+}
+mat-form-field {
+  width: 40%;
+  margin-top: 1.25rem;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 54px;
+}
+.search {
+  color: #1f516f;
+}
+.edit {
+  color: #1878b0;
+}
+.delete {
+  color: #e15639;
+}
+.add-button {
+  position: fixed;
+  top: 85%;
+  left: 90%;
+  color: rgb(56, 201, 68);
+  width: 100px;
+  height: 100px;
+}
+.add-button mat-icon {
+  font-size: 45px;
+  width: auto;
+  height: auto;
+}

@@ -2,7 +2,7 @@
   @if (menuItems$ | async; as menu) { @for (item of menu; track $index) {
   <button mat-button [routerLink]="item.redirect">
     <mat-icon>{{ item.icon }}</mat-icon>
-    {{ item.nombre }}
+    <span>{{ item.nombre }}</span>
   </button>
   } }
 </div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { user } from '../../../interfaces/user.interface';
+import { OrdenIngreso } from '../../../interfaces/oden-ingreso.interface';
+import { CommonModule } from '@angular/common';
+
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -20,38 +22,58 @@ import { MatInputModule } from '@angular/material/input';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
+    CommonModule,
   ],
   templateUrl: './orden-ingreso.component.html',
   styleUrl: './orden-ingreso.component.css',
 })
 export class OrdenIngresoComponent {
-  displayedColumns: string[] = ['user', 'name', 'lastName', 'sex', 'actions'];
-  userList: user[] = [
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Alexander', lastName: 'Diaz', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
-    { user: 'jperez', name: 'Juan', lastName: 'Perez', gender: 'male' },
+  displayedColumns: string[] = [
+    'nombre',
+    'id',
+    'motivo',
+    'sintomas',
+    'fecha',
+    'actions',
   ];
-  dataSource = new MatTableDataSource(this.userList);
+  orderList: OrdenIngreso[] = [
+    {
+      nombre: 'Juan Perez',
+      id: '01031231071',
+      motivo: 'pendiente',
+      sintomas: 'fiebre',
+      fecha: Date.now(),
+    },
+    {
+      nombre: 'Alexander Ramires',
+      id: '01031231071',
+      motivo: 'pendiente',
+      sintomas: 'vomitos',
+      fecha: Date.now(),
+    },
+    {
+      nombre: 'Pedro Porro',
+      id: '01031231071',
+      motivo: 'pendiente',
+      sintomas: 'dolor de cabeza',
+      fecha: Date.now(),
+    },
+    {
+      nombre: 'Pablo Diaz',
+      id: '01031231071',
+      motivo: 'pendiente',
+      sintomas: 'fiebre',
+      fecha: Date.now(),
+    },
+    {
+      nombre: 'Jose Gonzalez',
+      id: '01031231071',
+      motivo: 'pendiente',
+      sintomas: 'nauceas',
+      fecha: Date.now(),
+    },
+  ];
+  dataSource = new MatTableDataSource(this.orderList);
 
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

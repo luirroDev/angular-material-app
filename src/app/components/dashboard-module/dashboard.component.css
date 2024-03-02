@@ -17,5 +17,6 @@ aside {
 }
 
 main {
+  padding: 8px;
   grid-area: main;
 }
