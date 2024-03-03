@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Expediente } from '../../interfaces/expediente.interface';
+import { ExpedienteService } from '../../services/expediente.service';
 
 @Component({
   selector: 'app-expediente',
@@ -26,6 +27,10 @@ import { Expediente } from '../../interfaces/expediente.interface';
   styleUrl: './expediente.component.css',
 })
 export class ExpedienteComponent {
+  private readonly _expedienteSrv = inject(ExpedienteService);
+  listExpedientes = this._expedienteSrv.getExpedientes();
+  dataSource = new MatTableDataSource(this.listExpedientes);
+
   displayedColumns: string[] = [
     'nombre',
     'id',
@@ -34,17 +39,6 @@ export class ExpedienteComponent {
     'enfermedades',
     'actions',
   ];
-  orderList: Expediente[] = [
-    {
-      nombre: 'qwe',
-      id: 'qwe',
-      sexo: 'femenino',
-      direccion: 'qwe',
-      enfermedades: 'qe',
-    },
-  ];
-
-  dataSource = new MatTableDataSource(this.orderList);
 
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

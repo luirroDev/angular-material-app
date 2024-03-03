@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Tratamiento } from '../../interfaces/tratamiento.interface';
+import { TratamientoService } from '../../services/tratamiento.service';
 
 @Component({
   selector: 'app-reports',
@@ -26,6 +26,10 @@ import { Tratamiento } from '../../interfaces/tratamiento.interface';
   styleUrl: './tratamiento.component.css',
 })
 export class TratamientoComponent {
+  private readonly _tratamientoSrv = inject(TratamientoService);
+  listTratamiento = this._tratamientoSrv.getTratamientos();
+  dataSource = new MatTableDataSource(this.listTratamiento);
+
   displayedColumns: string[] = [
     'nombre',
     'enfermedad',
@@ -34,16 +38,7 @@ export class TratamientoComponent {
     'edad',
     'actions',
   ];
-  orderList: Tratamiento[] = [
-    {
-      nombre: 'Juan Perez',
-      enfermedad: '1',
-      aplicacion: 'a',
-      medicameto: 'a',
-      edad: 20,
-    },
-  ];
-  dataSource = new MatTableDataSource(this.orderList);
+
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
