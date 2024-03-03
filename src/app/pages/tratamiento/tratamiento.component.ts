@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TratamientoService } from '../../services/tratamiento.service';
 import { Tratamiento } from '../../interfaces/tratamiento.interface';
+import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
 
 @Component({
   selector: 'app-reports',
@@ -28,6 +29,7 @@ import { Tratamiento } from '../../interfaces/tratamiento.interface';
 })
 export class TratamientoComponent implements OnInit {
   private readonly _tratamientoSrv = inject(TratamientoService);
+  private readonly _dialogSrv = inject(DeleteConfirmationService);
   listTratamiento!: Tratamiento[];
   dataSource!: MatTableDataSource<Tratamiento>;
 
@@ -55,7 +57,13 @@ export class TratamientoComponent implements OnInit {
   }
 
   public eliminarTratamiento(index: number) {
-    this._tratamientoSrv.deleteTratamiento(index);
-    this.loadExpedientes();
+    this._dialogSrv
+      .confirm('¿Está seguro de eliminar este Tratamiento?')
+      .subscribe((result) => {
+        if (result) {
+          this._tratamientoSrv.deleteTratamiento(index);
+          this.loadExpedientes();
+        }
+      });
   }
 }

@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { OrdenIngresoService } from '../../services/orden-ingreso.service';
 import { OrdenIngreso } from '../../interfaces/oden-ingreso.interface';
+import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
 
 @Component({
   selector: 'app-users',
@@ -30,6 +31,7 @@ import { OrdenIngreso } from '../../interfaces/oden-ingreso.interface';
 })
 export class OrdenIngresoComponent implements OnInit {
   private readonly _ordenServ = inject(OrdenIngresoService);
+  private readonly _dialogSrv = inject(DeleteConfirmationService);
   listOrdenes!: OrdenIngreso[];
   dataSource!: MatTableDataSource<OrdenIngreso>;
 
@@ -57,7 +59,13 @@ export class OrdenIngresoComponent implements OnInit {
   }
 
   public eliminarOrden(index: number) {
-    this._ordenServ.deleteOrdenIngreso(index);
-    this.loadOrdenes();
+    this._dialogSrv
+      .confirm('¿Está seguro de eliminar esta orden de Ingreso?')
+      .subscribe((result) => {
+        if (result) {
+          this._ordenServ.deleteOrdenIngreso(index);
+          this.loadOrdenes();
+        }
+      });
   }
 }

@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Expediente } from '../../interfaces/expediente.interface';
 import { ExpedienteService } from '../../services/expediente.service';
+import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
 
 @Component({
   selector: 'app-expediente',
@@ -28,6 +29,7 @@ import { ExpedienteService } from '../../services/expediente.service';
 })
 export class ExpedienteComponent implements OnInit {
   private readonly _expedienteSrv = inject(ExpedienteService);
+  private readonly _dialogSrv = inject(DeleteConfirmationService);
   listExpedientes!: Expediente[];
   dataSource!: MatTableDataSource<Expediente>;
 
@@ -55,7 +57,13 @@ export class ExpedienteComponent implements OnInit {
   }
 
   public eliminarExpediente(index: number) {
-    this._expedienteSrv.deleteExpediente(index);
-    this.loadExpedientes();
+    this._dialogSrv
+      .confirm('¿Está seguro de eliminar este Expediente?')
+      .subscribe((result) => {
+        if (result) {
+          this._expedienteSrv.deleteExpediente(index);
+          this.loadExpedientes();
+        }
+      });
   }
 }
