@@ -43,7 +43,7 @@
       <th mat-header-cell *matHeaderCellDef style="text-align: center">
         Acciones
       </th>
-      <td mat-cell *matCellDef="let element" class="actions">
+      <td mat-cell *matCellDef="let element; let i = index" class="actions">
         <button
           mat-icon-button
           matTooltip="Ver"
@@ -68,6 +68,7 @@
           aria-hidden="false"
           aria-label="Eliminar"
           class="delete"
+          (click)="eliminarOrden(i)"
         >
           <mat-icon>delete</mat-icon>
         </button>

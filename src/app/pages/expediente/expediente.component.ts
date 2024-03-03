@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,10 +26,10 @@ import { ExpedienteService } from '../../services/expediente.service';
   templateUrl: './expediente.component.html',
   styleUrl: './expediente.component.css',
 })
-export class ExpedienteComponent {
+export class ExpedienteComponent implements OnInit {
   private readonly _expedienteSrv = inject(ExpedienteService);
-  listExpedientes = this._expedienteSrv.getExpedientes();
-  dataSource = new MatTableDataSource(this.listExpedientes);
+  listExpedientes!: Expediente[];
+  dataSource!: MatTableDataSource<Expediente>;
 
   displayedColumns: string[] = [
     'nombre',
@@ -40,8 +40,22 @@ export class ExpedienteComponent {
     'actions',
   ];
 
+  ngOnInit(): void {
+    this.loadExpedientes();
+  }
+
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public loadExpedientes() {
+    this.listExpedientes = this._expedienteSrv.getExpedientes();
+    this.dataSource = new MatTableDataSource(this.listExpedientes);
+  }
+
+  public eliminarExpediente(index: number) {
+    this._expedienteSrv.deleteExpediente(index);
+    this.loadExpedientes();
   }
 }

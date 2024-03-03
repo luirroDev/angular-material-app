@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // material
@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { OrdenIngresoService } from '../../services/orden-ingreso.service';
+import { OrdenIngreso } from '../../interfaces/oden-ingreso.interface';
 
 @Component({
   selector: 'app-users',
@@ -27,10 +28,10 @@ import { OrdenIngresoService } from '../../services/orden-ingreso.service';
   templateUrl: './orden-ingreso.component.html',
   styleUrl: './orden-ingreso.component.css',
 })
-export class OrdenIngresoComponent {
+export class OrdenIngresoComponent implements OnInit {
   private readonly _ordenServ = inject(OrdenIngresoService);
-  listOrdenes = this._ordenServ.getOrdenIngreso();
-  dataSource = new MatTableDataSource(this.listOrdenes);
+  listOrdenes!: OrdenIngreso[];
+  dataSource!: MatTableDataSource<OrdenIngreso>;
 
   displayedColumns: string[] = [
     'nombre',
@@ -41,8 +42,22 @@ export class OrdenIngresoComponent {
     'actions',
   ];
 
+  ngOnInit(): void {
+    this.loadOrdenes();
+  }
+
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public loadOrdenes() {
+    this.listOrdenes = this._ordenServ.getOrdenIngreso();
+    this.dataSource = new MatTableDataSource(this.listOrdenes);
+  }
+
+  public eliminarOrden(index: number) {
+    this._ordenServ.deleteOrdenIngreso(index);
+    this.loadOrdenes();
   }
 }

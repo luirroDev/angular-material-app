@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 // material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TratamientoService } from '../../services/tratamiento.service';
+import { Tratamiento } from '../../interfaces/tratamiento.interface';
 
 @Component({
   selector: 'app-reports',
@@ -25,10 +26,10 @@ import { TratamientoService } from '../../services/tratamiento.service';
   templateUrl: './tratamiento.component.html',
   styleUrl: './tratamiento.component.css',
 })
-export class TratamientoComponent {
+export class TratamientoComponent implements OnInit {
   private readonly _tratamientoSrv = inject(TratamientoService);
-  listTratamiento = this._tratamientoSrv.getTratamientos();
-  dataSource = new MatTableDataSource(this.listTratamiento);
+  listTratamiento!: Tratamiento[];
+  dataSource!: MatTableDataSource<Tratamiento>;
 
   displayedColumns: string[] = [
     'nombre',
@@ -39,8 +40,22 @@ export class TratamientoComponent {
     'actions',
   ];
 
+  ngOnInit(): void {
+    this.loadExpedientes();
+  }
+
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public loadExpedientes() {
+    this.listTratamiento = this._tratamientoSrv.getTratamientos();
+    this.dataSource = new MatTableDataSource(this.listTratamiento);
+  }
+
+  public eliminarTratamiento(index: number) {
+    this._tratamientoSrv.deleteTratamiento(index);
+    this.loadExpedientes();
   }
 }

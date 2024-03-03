@@ -46,4 +46,8 @@ export class OrdenIngresoService {
   getOrdenIngreso() {
     return this.ordenIngreso_list.slice();
   }
+
+  deleteOrdenIngreso(index: number) {
+    this.ordenIngreso_list.splice(index, 1);
+  }
 }

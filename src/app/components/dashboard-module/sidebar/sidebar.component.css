@@ -1,7 +1,7 @@
 .buttons-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: auto;
   border-right: solid 2px #f1f1f1;
 }
 

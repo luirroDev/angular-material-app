@@ -5,7 +5,7 @@ import { Tratamiento } from '../interfaces/tratamiento.interface';
   providedIn: 'root',
 })
 export class TratamientoService {
-  private tratamientoList: Tratamiento[] = [
+  private tratamiento_list: Tratamiento[] = [
     {
       nombre: 'Juan Perez',
       enfermedad: '1',
@@ -23,8 +23,10 @@ export class TratamientoService {
   ];
 
   getTratamientos() {
-    return this.tratamientoList.slice();
+    return this.tratamiento_list.slice();
   }
 
-  constructor() {}
+  deleteTratamiento(index: number) {
+    this.tratamiento_list.splice(index, 1);
+  }
 }

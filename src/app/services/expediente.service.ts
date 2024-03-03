@@ -20,9 +20,20 @@ export class ExpedienteService {
       direccion: 'Plaza de la Revolucion',
       enfermedades: 'qe',
     },
+    {
+      nombre: 'qwe',
+      id: 'qwe',
+      sexo: 'femenino',
+      direccion: 'Plaza de la Revolucion',
+      enfermedades: 'qe',
+    },
   ];
 
   getExpedientes() {
     return this.expediente_list.slice();
+  }
+
+  deleteExpediente(index: number) {
+    this.expediente_list.splice(index, 1);
   }
 }
