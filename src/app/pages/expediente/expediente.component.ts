@@ -8,7 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Expediente } from '../../../interfaces/expediente.interface';
+import { Expediente } from '../../interfaces/expediente.interface';
 
 @Component({
   selector: 'app-expediente',

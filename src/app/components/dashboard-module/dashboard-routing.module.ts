@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { HomeComponent } from './home/home.component';
-import { OrdenIngresoComponent } from './orden-ingreso/orden-ingreso.component';
-import { TratamientoComponent } from './tratamiento/tratamiento.component';
-import { ExpedienteComponent } from './expediente/expediente.component';
+import { HomeComponent } from '../../pages/home/home.component';
+import { OrdenIngresoComponent } from '../../pages/orden-ingreso/orden-ingreso.component';
+import { TratamientoComponent } from '../../pages/tratamiento/tratamiento.component';
+import { ExpedienteComponent } from '../../pages/expediente/expediente.component';
 
 const routes: Routes = [
   {
