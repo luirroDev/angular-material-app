@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { OrdenIngresoService } from '../../services/orden-ingreso.service';
 import { OrdenIngreso } from '../../interfaces/oden-ingreso.interface';
 import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-users',
@@ -32,6 +33,7 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 export class OrdenIngresoComponent implements OnInit {
   private readonly _ordenServ = inject(OrdenIngresoService);
   private readonly _dialogSrv = inject(DeleteConfirmationService);
+  private readonly _snackBar = inject(MatSnackBar);
   listOrdenes!: OrdenIngreso[];
   dataSource!: MatTableDataSource<OrdenIngreso>;
 
@@ -65,6 +67,15 @@ export class OrdenIngresoComponent implements OnInit {
         if (result) {
           this._ordenServ.deleteOrdenIngreso(index);
           this.loadOrdenes();
+          this._snackBar.open(
+            'Orden de Ingreso eliminada con éxito',
+            undefined,
+            {
+              duration: 1500,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            }
+          );
         }
       });
   }

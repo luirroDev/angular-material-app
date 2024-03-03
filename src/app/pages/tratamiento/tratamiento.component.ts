@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TratamientoService } from '../../services/tratamiento.service';
 import { Tratamiento } from '../../interfaces/tratamiento.interface';
 import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-reports',
@@ -30,6 +31,7 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 export class TratamientoComponent implements OnInit {
   private readonly _tratamientoSrv = inject(TratamientoService);
   private readonly _dialogSrv = inject(DeleteConfirmationService);
+  private readonly _snackBar = inject(MatSnackBar);
   listTratamiento!: Tratamiento[];
   dataSource!: MatTableDataSource<Tratamiento>;
 
@@ -63,6 +65,11 @@ export class TratamientoComponent implements OnInit {
         if (result) {
           this._tratamientoSrv.deleteTratamiento(index);
           this.loadExpedientes();
+          this._snackBar.open('Tratamiento eliminado con éxito', undefined, {
+            duration: 1500,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
         }
       });
   }

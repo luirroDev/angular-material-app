@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Expediente } from '../../interfaces/expediente.interface';
 import { ExpedienteService } from '../../services/expediente.service';
 import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-expediente',
@@ -30,6 +31,7 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 export class ExpedienteComponent implements OnInit {
   private readonly _expedienteSrv = inject(ExpedienteService);
   private readonly _dialogSrv = inject(DeleteConfirmationService);
+  private readonly _snackBar = inject(MatSnackBar);
   listExpedientes!: Expediente[];
   dataSource!: MatTableDataSource<Expediente>;
 
@@ -63,6 +65,11 @@ export class ExpedienteComponent implements OnInit {
         if (result) {
           this._expedienteSrv.deleteExpediente(index);
           this.loadExpedientes();
+          this._snackBar.open('Expediente eliminado con éxito', undefined, {
+            duration: 1500,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
         }
       });
   }
