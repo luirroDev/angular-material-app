@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { OrdenIngreso } from '../../../interfaces/oden-ingreso.interface';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // material
@@ -10,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { OrdenIngresoService } from '../../../services/orden-ingreso.service';
 
 @Component({
   selector: 'app-users',
@@ -28,6 +28,10 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './orden-ingreso.component.css',
 })
 export class OrdenIngresoComponent {
+  private readonly _ordenServ = inject(OrdenIngresoService);
+  listOrdenes = this._ordenServ.getOrdenIngreso();
+  dataSource = new MatTableDataSource(this.listOrdenes);
+
   displayedColumns: string[] = [
     'nombre',
     'id',
@@ -36,44 +40,6 @@ export class OrdenIngresoComponent {
     'fecha',
     'actions',
   ];
-  orderList: OrdenIngreso[] = [
-    {
-      nombre: 'Juan Perez',
-      id: '01031231071',
-      motivo: 'pendiente',
-      sintomas: 'fiebre',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Alexander Ramires',
-      id: '01031231071',
-      motivo: 'pendiente',
-      sintomas: 'vomitos',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Pedro Porro',
-      id: '01031231071',
-      motivo: 'pendiente',
-      sintomas: 'dolor de cabeza',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Pablo Diaz',
-      id: '01031231071',
-      motivo: 'pendiente',
-      sintomas: 'fiebre',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Jose Gonzalez',
-      id: '01031231071',
-      motivo: 'pendiente',
-      sintomas: 'nauceas',
-      fecha: Date.now(),
-    },
-  ];
-  dataSource = new MatTableDataSource(this.orderList);
 
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
