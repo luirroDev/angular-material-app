@@ -13,6 +13,8 @@ import { OrdenIngresoService } from '../../services/orden-ingreso.service';
 import { OrdenIngreso } from '../../interfaces/oden-ingreso.interface';
 import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { OrdenIngresoFormComponent } from '../../components/orden-ingreso-form/orden-ingreso-form.component';
 
 @Component({
   selector: 'app-users',
@@ -34,6 +36,7 @@ export class OrdenIngresoComponent implements OnInit {
   private readonly _ordenServ = inject(OrdenIngresoService);
   private readonly _dialogSrv = inject(DeleteConfirmationService);
   private readonly _snackBar = inject(MatSnackBar);
+  private readonly _dialogForm = inject(MatDialog);
   listOrdenes!: OrdenIngreso[];
   dataSource!: MatTableDataSource<OrdenIngreso>;
 
@@ -78,5 +81,23 @@ export class OrdenIngresoComponent implements OnInit {
           );
         }
       });
+  }
+
+  openFormDialog() {
+    const dialogRef = this._dialogForm.open(OrdenIngresoFormComponent, {
+      width: '600px',
+      data: {}, // Se pueden pasar datos iniciales aquí si es necesario
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadOrdenes();
+        this._snackBar.open('Orden de Ingreso Agregada con éxito', undefined, {
+          duration: 1500,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      }
+    });
   }
 }

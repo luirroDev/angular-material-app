@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? "Editar Orden de Ingreso" : "Agregar Orden de Ingreso" }}
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Carnet de Identidad</mat-label>
+      <input matInput formControlName="id" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Motivo</mat-label>
+      <input matInput formControlName="motivo" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sintomas</mat-label>
+      <input matInput formControlName="sintomas" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div class="button-group">
+      <button mat-button type="button" (click)="this.dialogRef.close()">
+        Volver
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
