@@ -37,7 +37,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 })
 export class OrdenIngresoFormComponent {
   form: FormGroup;
-  isEditMode = false;
+  isEditMode = !!this.data;
 
   constructor(
     public dialogRef: MatDialogRef<OrdenIngresoFormComponent>,
@@ -69,11 +69,27 @@ export class OrdenIngresoFormComponent {
     }
     return false;
   }
+
+  editarOrdenIngreso(): boolean {
+    const ordenIngreso: OrdenIngreso = {
+      nombre: this.form.value.nombre,
+      id: this.form.value.id,
+      motivo: this.form.value.motivo,
+      sintomas: this.form.value.sintomas,
+      fecha: this.form.value.fecha,
+    };
+    if (!this.form.invalid) {
+      this._ordenIngServ.updateOrdenIngreso(ordenIngreso);
+      return true;
+    }
+    return false;
+  }
+
   onSubmit() {
     let result = false;
     if (this.isEditMode) {
       // Lógica para editar la orden de ingreso
-      // this.ordenService.updateOrdenIngreso(this.form.value);
+      result = this.editarOrdenIngreso();
     } else {
       // Lógica para agregar una nueva orden de ingreso
       result = this.addOrdenIngreso();

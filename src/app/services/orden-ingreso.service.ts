@@ -15,28 +15,28 @@ export class OrdenIngresoService {
     },
     {
       nombre: 'Alexander Ramires',
-      id: '01031231071',
+      id: '01031231070',
       motivo: 'pendiente',
       sintomas: 'vomitos',
       fecha: Date.now(),
     },
     {
       nombre: 'Pedro Porro',
-      id: '01031231071',
+      id: '01031231069',
       motivo: 'pendiente',
       sintomas: 'dolor de cabeza',
       fecha: Date.now(),
     },
     {
       nombre: 'Pablo Diaz',
-      id: '01031231071',
+      id: '01031231068',
       motivo: 'pendiente',
       sintomas: 'fiebre',
       fecha: Date.now(),
     },
     {
       nombre: 'Jose Gonzalez',
-      id: '01031231071',
+      id: '01031231067',
       motivo: 'pendiente',
       sintomas: 'nauceas',
       fecha: Date.now(),
@@ -47,8 +47,19 @@ export class OrdenIngresoService {
     return this.ordenIngreso_list.slice();
   }
 
+  getOrdenByID(id: number) {
+    return this.ordenIngreso_list[id];
+  }
+
   addOrdenIngreso(newOrdenIngreso: OrdenIngreso) {
     this.ordenIngreso_list.unshift(newOrdenIngreso);
+  }
+
+  updateOrdenIngreso(ordenIngreso: OrdenIngreso) {
+    const index = this.ordenIngreso_list.findIndex(
+      (item) => item.id === ordenIngreso.id
+    );
+    this.ordenIngreso_list[index] = ordenIngreso;
   }
 
   deleteOrdenIngreso(index: number) {

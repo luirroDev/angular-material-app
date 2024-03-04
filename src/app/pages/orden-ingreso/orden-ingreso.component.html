@@ -59,6 +59,7 @@
           aria-hidden="false"
           aria-label="Editar"
           class="edit"
+          (click)="editarOrden(i)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -83,7 +84,7 @@
     mat-icon-button
     matTooltip="Agregar Orden de Ingreso"
     class="add-button"
-    (click)="openFormDialog()"
+    (click)="openFormDialog('Agregada')"
   >
     <mat-icon>add_circle</mat-icon>
   </button>

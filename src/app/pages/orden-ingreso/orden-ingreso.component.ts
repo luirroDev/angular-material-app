@@ -49,7 +49,7 @@ export class OrdenIngresoComponent implements OnInit {
     'actions',
   ];
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loadOrdenes();
   }
 
@@ -83,16 +83,21 @@ export class OrdenIngresoComponent implements OnInit {
       });
   }
 
-  openFormDialog() {
+  public editarOrden(id: number) {
+    const ordenToUpdate = this._ordenServ.getOrdenByID(id);
+    this.openFormDialog('Editada', ordenToUpdate);
+  }
+
+  public openFormDialog(option: 'Agregada' | 'Editada', orden?: OrdenIngreso) {
     const dialogRef = this._dialogForm.open(OrdenIngresoFormComponent, {
       width: '600px',
-      data: {}, // Se pueden pasar datos iniciales aquí si es necesario
+      data: { orden }, // Se pueden pasar datos iniciales aquí si es necesario
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadOrdenes();
-        this._snackBar.open('Orden de Ingreso Agregada con éxito', undefined, {
+        this._snackBar.open(`Orden de Ingreso ${option} con éxito`, undefined, {
           duration: 1500,
           horizontalPosition: 'center',
           verticalPosition: 'top',
