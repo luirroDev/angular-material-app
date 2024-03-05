@@ -24,9 +24,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   selector: 'app-orden-ingreso-form',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
     MatDatepickerModule,

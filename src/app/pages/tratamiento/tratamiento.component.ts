@@ -12,6 +12,8 @@ import { TratamientoService } from '../../services/tratamiento.service';
 import { Tratamiento } from '../../interfaces/tratamiento.interface';
 import { DeleteConfirmationService } from '../../services/delete-confirmation.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { TratamientoFormComponent } from '../../components/tratamiento-form/tratamiento-form.component';
 
 @Component({
   selector: 'app-reports',
@@ -32,6 +34,8 @@ export class TratamientoComponent implements OnInit {
   private readonly _tratamientoSrv = inject(TratamientoService);
   private readonly _dialogSrv = inject(DeleteConfirmationService);
   private readonly _snackBar = inject(MatSnackBar);
+  private readonly _dialogForm = inject(MatDialog);
+
   listTratamiento!: Tratamiento[];
   dataSource!: MatTableDataSource<Tratamiento>;
 
@@ -54,8 +58,35 @@ export class TratamientoComponent implements OnInit {
   }
 
   public loadExpedientes() {
-    this.listTratamiento = this._tratamientoSrv.getTratamientos();
+    this.listTratamiento = this._tratamientoSrv.getAll();
     this.dataSource = new MatTableDataSource(this.listTratamiento);
+  }
+
+  public editarTratamiento(id: number) {
+    const tratToUpdate = this._tratamientoSrv.getByIndex(id);
+    this.openFormDialog('Editado', id, tratToUpdate);
+  }
+
+  public openFormDialog(
+    option: 'Agregado' | 'Editado',
+    id?: number,
+    tratamiento?: Tratamiento
+  ) {
+    const dialogRef = this._dialogForm.open(TratamientoFormComponent, {
+      width: '600px',
+      data: { tratamiento, id }, // Se pueden pasar datos iniciales aquí si es necesario
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadExpedientes();
+        this._snackBar.open(`Tratamiento ${option} con éxito`, undefined, {
+          duration: 1500,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        });
+      }
+    });
   }
 
   public eliminarTratamiento(index: number) {

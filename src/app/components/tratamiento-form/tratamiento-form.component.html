@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>
+  {{ isEditMode ? "Editar Orden de Ingreso" : "Agregar Orden de Ingreso" }}
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enfermedad</mat-label>
+      <input matInput formControlName="enfermedad" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Aplicación</mat-label>
+      <input matInput formControlName="aplicacion" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Medicamento</mat-label>
+      <input matInput formControlName="medicamento" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Edad</mat-label>
+      <input matInput formControlName="edad" />
+    </mat-form-field>
+    <div class="button-group">
+      <button mat-button type="button" (click)="this.dialogRef.close()">
+        Volver
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

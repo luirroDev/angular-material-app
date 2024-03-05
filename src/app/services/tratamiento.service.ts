@@ -10,20 +10,32 @@ export class TratamientoService {
       nombre: 'Juan Perez',
       enfermedad: '1',
       aplicacion: 'a',
-      medicameto: 'a',
+      medicamento: 'a',
       edad: 20,
     },
     {
       nombre: 'Juan Perez',
       enfermedad: '1',
       aplicacion: 'a',
-      medicameto: 'a',
+      medicamento: 'a',
       edad: 24,
     },
   ];
 
-  getTratamientos() {
+  getAll() {
     return this.tratamiento_list.slice();
+  }
+
+  getByIndex(index: number) {
+    return this.tratamiento_list[index];
+  }
+
+  create(newTratamiento: Tratamiento) {
+    this.tratamiento_list.unshift(newTratamiento);
+  }
+
+  update(tratamiento: Tratamiento, index: number) {
+    this.tratamiento_list[index] = tratamiento;
   }
 
   deleteTratamiento(index: number) {
