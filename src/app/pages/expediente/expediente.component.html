@@ -61,6 +61,7 @@
           aria-hidden="false"
           aria-label="Editar"
           class="edit"
+          (click)="editarExpediente(i)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -81,7 +82,12 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <button mat-icon-button matTooltip="Agregar Expediente" class="add-button">
+  <button
+    mat-icon-button
+    matTooltip="Agregar Expediente"
+    class="add-button"
+    (click)="openFormDialog('Agregado')"
+  >
     <mat-icon>add_circle</mat-icon>
   </button>
 </div>

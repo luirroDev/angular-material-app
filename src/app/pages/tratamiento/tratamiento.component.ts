@@ -49,7 +49,7 @@ export class TratamientoComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.loadExpedientes();
+    this.loadTratamiento();
   }
 
   public applyFilter(event: Event) {
@@ -57,7 +57,7 @@ export class TratamientoComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  public loadExpedientes() {
+  public loadTratamiento() {
     this.listTratamiento = this._tratamientoSrv.getAll();
     this.dataSource = new MatTableDataSource(this.listTratamiento);
   }
@@ -79,7 +79,7 @@ export class TratamientoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.loadExpedientes();
+        this.loadTratamiento();
         this._snackBar.open(`Tratamiento ${option} con éxito`, undefined, {
           duration: 1500,
           horizontalPosition: 'center',
@@ -95,7 +95,7 @@ export class TratamientoComponent implements OnInit {
       .subscribe((result) => {
         if (result) {
           this._tratamientoSrv.deleteTratamiento(index);
-          this.loadExpedientes();
+          this.loadTratamiento();
           this._snackBar.open('Tratamiento eliminado con éxito', undefined, {
             duration: 1500,
             horizontalPosition: 'center',

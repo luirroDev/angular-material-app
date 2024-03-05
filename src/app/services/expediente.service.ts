@@ -33,6 +33,18 @@ export class ExpedienteService {
     return this.expediente_list.slice();
   }
 
+  getByIndex(index: number) {
+    return this.expediente_list[index];
+  }
+
+  create(newExpediente: Expediente) {
+    this.expediente_list.unshift(newExpediente);
+  }
+
+  update(expediente: Expediente, index: number) {
+    this.expediente_list[index] = expediente;
+  }
+
   deleteExpediente(index: number) {
     this.expediente_list.splice(index, 1);
   }
