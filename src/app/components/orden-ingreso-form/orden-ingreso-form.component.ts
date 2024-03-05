@@ -47,7 +47,10 @@ export class OrdenIngresoFormComponent {
     this.isEditMode = !!data.orden;
     this.form = this.fb.group({
       nombre: [data.orden?.nombre || '', Validators.required],
-      id: [data.orden?.id || '', Validators.required],
+      id: [
+        data.orden?.id || '',
+        [Validators.required, Validators.minLength(11)],
+      ],
       motivo: [data.orden?.motivo || '', Validators.required],
       sintomas: [data.orden?.sintomas || '', Validators.required],
       fecha: [data.orden?.fecha || '', Validators.required],
