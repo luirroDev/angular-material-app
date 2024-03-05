@@ -1,12 +1,17 @@
 <mat-toolbar color="primary">
   <span>AppUsers</span>
-  <button
-    mat-icon-button
-    aria-hidden="false"
-    aria-label="Cerrar sesión"
-    type="button"
-    routerLink="logout"
-  >
-    <mat-icon>logout</mat-icon>
-  </button>
+  <div class="auth-options">
+    @if(currentUser) {
+    <a href="/dashboard">{{ currentUser.email }}</a>
+    }
+    <button
+      mat-icon-button
+      aria-hidden="false"
+      aria-label="Cerrar sesión"
+      type="button"
+      (click)="sesionLogout()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

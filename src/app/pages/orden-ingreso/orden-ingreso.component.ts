@@ -15,6 +15,7 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { OrdenIngresoFormComponent } from '../../components/orden-ingreso-form/orden-ingreso-form.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -35,6 +36,7 @@ import { OrdenIngresoFormComponent } from '../../components/orden-ingreso-form/o
 export class OrdenIngresoComponent implements OnInit {
   private readonly _ordenServ = inject(OrdenIngresoService);
   private readonly _dialogSrv = inject(DeleteConfirmationService);
+  private readonly _authSrv = inject(AuthService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly _dialogForm = inject(MatDialog);
   listOrdenes!: OrdenIngreso[];
@@ -104,5 +106,9 @@ export class OrdenIngresoComponent implements OnInit {
         });
       }
     });
+  }
+
+  public isAdmin(): boolean {
+    return this._authSrv.isAdmin();
   }
 }

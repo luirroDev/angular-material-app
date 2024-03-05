@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -29,6 +31,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  private readonly _userServ = inject(UserService);
+  private readonly _authServ = inject(AuthService);
   form: FormGroup;
   loading = false;
 
@@ -44,12 +48,15 @@ export class LoginComponent {
   }
 
   public login() {
-    const user: string = this.form.value.user;
+    const email: string = this.form.value.user;
     const password: string = this.form.value.password;
 
-    if (user === 'admin' && password === 'admin') {
+    const user = this._userServ.getByEmail(email);
+
+    if (email === user?.email && password === user.password) {
       // redirect
       this.fakeLoading();
+      this._authServ.login(user);
     } else {
       // Throw an error message
       this.errorHandler();
