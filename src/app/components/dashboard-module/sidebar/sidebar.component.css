@@ -11,4 +11,10 @@
   font-size: 1.15rem;
   display: grid;
   grid-template-columns: 20% 80%;
+  color: #427dbf;
+  transition: font-weight 0.3s ease;
+}
+
+.buttons-container > button:hover {
+  font-weight: bold;
 }

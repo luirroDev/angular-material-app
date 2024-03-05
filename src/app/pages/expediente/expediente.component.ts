@@ -14,6 +14,7 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpedienteFormComponent } from '../../components/expediente-form/expediente-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-expediente',
@@ -35,6 +36,7 @@ export class ExpedienteComponent implements OnInit {
   private readonly _dialogSrv = inject(DeleteConfirmationService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly _dialogForm = inject(MatDialog);
+  private readonly _authSrv = inject(AuthService);
 
   listExpedientes!: Expediente[];
   dataSource!: MatTableDataSource<Expediente>;
@@ -103,5 +105,9 @@ export class ExpedienteComponent implements OnInit {
           });
         }
       });
+  }
+
+  public isAdmin(): boolean {
+    return this._authSrv.isAdmin();
   }
 }

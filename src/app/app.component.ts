@@ -10,5 +10,5 @@ import { LoginComponent } from './pages/login/login.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'angular-material-app';
+  title = 'sistema-gestion-hospitalaria';
 }

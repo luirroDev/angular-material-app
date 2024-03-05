@@ -18,10 +18,5 @@
     "nombre": "Expediente Médico",
     "redirect": "/dashboard/expediente",
     "icon": "medical_information"
-  },
-  {
-    "nombre": "Usuario",
-    "redirect": "/dashboard/reports",
-    "icon": "person"
   }
 ]

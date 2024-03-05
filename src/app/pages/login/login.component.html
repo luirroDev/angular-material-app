@@ -1,8 +1,8 @@
 <div class="container">
+  @if (loading) {
+  <mat-spinner class="spinner"></mat-spinner>
+  } @else {
   <div class="login">
-    @if (loading) {
-    <mat-spinner class="spinner"></mat-spinner>
-    } @else {
     <img
       src="./assets/images/login-image.png"
       alt="login-user-image"
@@ -15,8 +15,23 @@
         <input matInput type="text" autocomplete="off" formControlName="user" />
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password" />
+        <mat-label>Enter your password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          class="button-hide"
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
       </mat-form-field>
       <br />
       <button
@@ -28,6 +43,6 @@
         Login
       </button>
     </form>
-    }
   </div>
+  }
 </div>

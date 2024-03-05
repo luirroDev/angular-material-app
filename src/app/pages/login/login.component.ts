@@ -15,6 +15,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ import { AuthService } from '../../services/auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     MatSnackBarModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
@@ -33,6 +35,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
   private readonly _userServ = inject(UserService);
   private readonly _authServ = inject(AuthService);
+  hide = true;
   form: FormGroup;
   loading = false;
 

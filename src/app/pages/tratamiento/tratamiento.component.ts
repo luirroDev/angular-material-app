@@ -14,6 +14,7 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TratamientoFormComponent } from '../../components/tratamiento-form/tratamiento-form.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-reports',
@@ -35,6 +36,7 @@ export class TratamientoComponent implements OnInit {
   private readonly _dialogSrv = inject(DeleteConfirmationService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly _dialogForm = inject(MatDialog);
+  private readonly _authSrv = inject(AuthService);
 
   listTratamiento!: Tratamiento[];
   dataSource!: MatTableDataSource<Tratamiento>;
@@ -103,5 +105,9 @@ export class TratamientoComponent implements OnInit {
           });
         }
       });
+  }
+
+  public isAdmin(): boolean {
+    return this._authSrv.isAdmin();
   }
 }

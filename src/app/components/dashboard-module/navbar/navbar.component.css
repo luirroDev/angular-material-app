@@ -2,6 +2,19 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #134b96;
+}
+
+mat-toolbar img {
+  width: 50px;
+  border-radius: 2rem;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 20%;
 }
 
 .auth-options {
@@ -14,4 +27,5 @@ mat-toolbar {
 .auth-options a {
   text-decoration: none;
   height: auto;
+  color: #f1f1f1;
 }
