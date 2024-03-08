@@ -6,33 +6,18 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-
-// angular-material
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-  ],
+  selector: 'app-login-bootstrap',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
 })
-export class LoginComponent {
+export class LoginBootstrapComponent {
   private readonly _userServ = inject(UserService);
   private readonly _authServ = inject(AuthService);
   hide = true;
@@ -57,11 +42,9 @@ export class LoginComponent {
     const user = this._userServ.getByEmail(email);
 
     if (email === user?.email && password === user.password) {
-      // redirect
       this.fakeLoading();
       this._authServ.login(user);
     } else {
-      // Throw an error message
       this.errorHandler();
     }
   }
