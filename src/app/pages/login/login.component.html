@@ -1,14 +1,14 @@
 <div class="container h-100 d-flex justify-content-center align-items-center">
-  <div class="card" *ngIf="!loading; else loadingSpinner">
-    <div class="card-body">
+  <div class="card shadow-lg" *ngIf="!loading; else loadingSpinner">
+    <div class="card-body d-flex justify-content-center align-items-center">
       <img
         src="./assets/images/login-image.png"
         alt="login-user-image"
         class="mb-4"
         width="50%"
       />
-      <form [formGroup]="form" (ngSubmit)="login()">
-        <h2 class="text-center">Iniciar Sesión</h2>
+      <form [formGroup]="form" (ngSubmit)="login()" class="w-100">
+        <h2 class="text-center font-weight-bold">Iniciar Sesión</h2>
         <div class="form-group">
           <label for="user">Usuario</label>
           <input
@@ -27,18 +27,12 @@
             id="password"
             formControlName="password"
           />
-          <button
-            type="button"
-            class="btn btn-light btn-sm"
-            (click)="hide = !hide"
-          >
-            <i
-              class="fa"
-              [ngClass]="{ 'fa-eye': hide, 'fa-eye-slash': !hide }"
-            ></i>
-          </button>
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        <button
+          type="submit"
+          class="btn btn-primary mt-3 cursor-pointer"
+          [disabled]="form.invalid"
+        >
           Login
         </button>
       </form>
@@ -49,9 +43,7 @@
       class="d-flex justify-content-center align-items-center"
       style="height: 100vh"
     >
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
+      <div class="spinner-border text-primary" role="status"></div>
     </div>
   </ng-template>
 </div>
