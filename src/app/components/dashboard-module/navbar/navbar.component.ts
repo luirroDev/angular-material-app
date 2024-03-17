@@ -1,12 +1,10 @@
 import { Component, inject } from '@angular/core';
-
-// material
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../../services/auth.service';
-import { User } from '../../../interfaces/user.interface';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
+import { User } from '../../../interfaces/user.interface';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
