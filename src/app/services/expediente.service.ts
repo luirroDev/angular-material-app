@@ -1,6 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Expediente } from '../interfaces/expediente.interface';
+import {
+  CreateExpedienteDTO,
+  Expediente,
+} from '../interfaces/expediente.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,15 +21,18 @@ export class ExpedienteService {
     return this._http.get<Expediente>(`${this.url}/${id}`);
   }
 
-  create(newExpediente: Expediente) {
-    // this.expediente_list.unshift(newExpediente);
+  create(newExpediente: CreateExpedienteDTO) {
+    return this._http.post<Expediente>(this.url, newExpediente);
   }
 
-  update(expediente: Expediente, index: number) {
-    // this.expediente_list[index] = expediente;
+  update(id: number, expedienteChanges: CreateExpedienteDTO) {
+    console.log(id, expedienteChanges);
+
+    return this._http.patch<Expediente>(`${this.url}/${id}`, expedienteChanges);
   }
 
-  deleteExpediente(index: number) {
-    // this.expediente_list.splice(index, 1);
+  delete(id: number) {
+    console.log(id);
+    return this._http.delete<any>(`${this.url}/${id}`);
   }
 }

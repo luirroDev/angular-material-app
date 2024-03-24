@@ -14,7 +14,10 @@ import {
   MAT_DIALOG_DATA,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { Expediente } from '../../interfaces/expediente.interface';
+import {
+  Expediente,
+  CreateExpedienteDTO,
+} from '../../interfaces/expediente.interface';
 import { ExpedienteService } from '../../services/expediente.service';
 
 @Component({
@@ -32,67 +35,54 @@ import { ExpedienteService } from '../../services/expediente.service';
 })
 export class ExpedienteFormComponent {
   form: FormGroup;
-  isEditMode = false;
+  isEditMode: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<ExpedienteFormComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { expediente?: Expediente; id: number },
+    public data: Expediente,
     private fb: FormBuilder
   ) {
-    this.isEditMode = !!data.expediente;
+    this.isEditMode = !!data;
     this.form = this.fb.group({
-      nombre: [data.expediente?.nombre || '', Validators.required],
-      id: [
-        data.expediente?.id || '',
+      nombre: [data?.nombre || '', Validators.required],
+      ci: [
+        { value: data?.ci || '', disabled: this.isEditMode },
         [Validators.required, Validators.minLength(11)],
       ],
-      sexo: [data.expediente?.sexo || '', Validators.required],
-      direccion: [data.expediente?.direccion || '', Validators.required],
-      enfermedades: [data.expediente?.enfermedades || '', Validators.required],
+      sexo: [data?.sexo || '', Validators.required],
+      direccion: [data?.direccion || '', Validators.required],
+      enfermedades: [data?.enfermedades || '', Validators.required],
     });
   }
-  private readonly _expServ = inject(ExpedienteService);
+  private readonly _expedienteSrv = inject(ExpedienteService);
 
-  addExpediente(): boolean {
-    const expediente: any = {
+  saveExpediente(): boolean {
+    if (this.form.invalid) {
+      return false;
+    }
+    this.form.get('ci')?.enable();
+    const expedienteData: CreateExpedienteDTO = {
       nombre: this.form.value.nombre,
-      id: this.form.value.id,
+      ci: this.form.value.ci,
       sexo: this.form.value.sexo,
       direccion: this.form.value.direccion,
       enfermedades: this.form.value.enfermedades,
     };
-    if (!this.form.invalid) {
-      this._expServ.create(expediente);
-      return true;
-    }
-    return false;
-  }
 
-  editarExpediente(): boolean {
-    const expediente: any = {
-      nombre: this.form.value.nombre,
-      id: this.form.value.id,
-      sexo: this.form.value.sexo,
-      direccion: this.form.value.direccion,
-      enfermedades: this.form.value.enfermedades,
-    };
-    if (!this.form.invalid) {
-      this._expServ.update(expediente, this.data.id);
-      return true;
+    if (this.isEditMode) {
+      // Lógica para editar un expediente existente
+      this._expedienteSrv.update(this.data.id, expedienteData).subscribe();
+    } else {
+      // Lógica para crear un nuevo expediente
+      this._expedienteSrv.create(expedienteData).subscribe();
     }
-    return false;
+
+    return true;
   }
 
   onSubmit() {
-    let result = false;
-    if (this.isEditMode) {
-      // Lógica para editar un nuevo expediente
-      result = this.editarExpediente();
-    } else {
-      // Lógica para agregar un nuevo expediente
-      result = this.addExpediente();
-    }
+    let result = this.saveExpediente();
     this.dialogRef.close(result);
   }
 }

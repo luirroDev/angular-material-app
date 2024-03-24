@@ -68,43 +68,46 @@ export class ExpedienteComponent implements OnInit {
 
   public editExpediente(id: number) {
     this._expedienteSrv.getById(id).subscribe((data) => {
-      const expToUpdate = data;
-      this.openFormDialog('Editado', id, expToUpdate);
+      this.openFormDialog({ actionType: 'Editado', recordData: data });
     });
   }
 
-  public openFormDialog(
-    option: 'Agregado' | 'Editado',
-    id?: number,
-    expediente?: Expediente
-  ) {
+  public openFormDialog(options: {
+    actionType: 'Agregado' | 'Editado';
+    recordData?: Expediente;
+  }) {
     const dialogRef = this._dialogForm.open(ExpedienteFormComponent, {
       width: '600px',
-      data: { expediente, id }, // Se pueden pasar datos iniciales aquí si es necesario
+      data: options.recordData, // Se pueden pasar datos iniciales aquí si es necesario
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadExpedientes();
-        this._snackBar.open(`Expediente ${option} con éxito`, undefined, {
-          duration: 1500,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        });
+        this._snackBar.open(
+          `Expediente ${options.actionType} con éxito`,
+          undefined,
+          {
+            duration: 1500,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          }
+        );
       }
     });
   }
 
-  public eliminarExpediente(index: number) {
+  public eliminarExpediente(id: number) {
     this._dialogSrv
       .confirm('¿Está seguro de eliminar este Expediente?')
       .subscribe((result) => {
         if (result) {
-          this._expedienteSrv.deleteExpediente(index);
-          this.loadExpedientes();
-          this._snackBar.open('Expediente eliminado con éxito', undefined, {
-            duration: 1500,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
+          this._expedienteSrv.delete(id).subscribe(() => {
+            this.loadExpedientes();
+            this._snackBar.open('Expediente eliminado con éxito', undefined, {
+              duration: 1500,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+            });
           });
         }
       });

@@ -6,3 +6,5 @@ export interface Expediente {
   direccion: string;
   enfermedades: string;
 }
+
+export interface CreateExpedienteDTO extends Omit<Expediente, 'id'> {}
