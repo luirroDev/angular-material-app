@@ -26,13 +26,10 @@ export class ExpedienteService {
   }
 
   update(id: number, expedienteChanges: CreateExpedienteDTO) {
-    console.log(id, expedienteChanges);
-
     return this._http.patch<Expediente>(`${this.url}/${id}`, expedienteChanges);
   }
 
   delete(id: number) {
-    console.log(id);
     return this._http.delete<any>(`${this.url}/${id}`);
   }
 }
