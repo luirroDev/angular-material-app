@@ -20,9 +20,9 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="ci">
       <th mat-header-cell *matHeaderCellDef>Carnet de Identidad</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.ci }}</td>
     </ng-container>
 
     <ng-container matColumnDef="sexo">
@@ -45,7 +45,7 @@
       <th mat-header-cell *matHeaderCellDef style="text-align: center">
         Acciones
       </th>
-      <td mat-cell *matCellDef="let element; let i = index" class="actions">
+      <td mat-cell *matCellDef="let element" class="actions">
         <button
           mat-icon-button
           matTooltip="Ver"
@@ -61,7 +61,7 @@
           aria-hidden="false"
           aria-label="Editar"
           class="edit"
-          (click)="editarExpediente(i)"
+          (click)="editExpediente(element.id)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -72,7 +72,7 @@
           aria-hidden="false"
           aria-label="Eliminar"
           class="delete"
-          (click)="eliminarExpediente(i)"
+          (click)="eliminarExpediente(element.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>

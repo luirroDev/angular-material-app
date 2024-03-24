@@ -38,12 +38,12 @@ export class ExpedienteComponent implements OnInit {
   private readonly _dialogForm = inject(MatDialog);
   private readonly _authSrv = inject(AuthService);
 
-  listExpedientes!: Expediente[];
+  listExpedientes: Expediente[] = [];
   dataSource!: MatTableDataSource<Expediente>;
 
   displayedColumns: string[] = [
     'nombre',
-    'id',
+    'ci',
     'sexo',
     'direccion',
     'enfermedades',
@@ -60,13 +60,17 @@ export class ExpedienteComponent implements OnInit {
   }
 
   public loadExpedientes() {
-    this.listExpedientes = this._expedienteSrv.getExpedientes();
-    this.dataSource = new MatTableDataSource(this.listExpedientes);
+    this._expedienteSrv.getAll().subscribe((data) => {
+      this.listExpedientes = data;
+      this.dataSource = new MatTableDataSource(this.listExpedientes);
+    });
   }
 
-  public editarExpediente(id: number) {
-    const expToUpdate = this._expedienteSrv.getByIndex(id);
-    this.openFormDialog('Editado', id, expToUpdate);
+  public editExpediente(id: number) {
+    this._expedienteSrv.getById(id).subscribe((data) => {
+      const expToUpdate = data;
+      this.openFormDialog('Editado', id, expToUpdate);
+    });
   }
 
   public openFormDialog(
@@ -78,7 +82,6 @@ export class ExpedienteComponent implements OnInit {
       width: '600px',
       data: { expediente, id }, // Se pueden pasar datos iniciales aquí si es necesario
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadExpedientes();

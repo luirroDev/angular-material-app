@@ -55,7 +55,7 @@ export class ExpedienteFormComponent {
   private readonly _expServ = inject(ExpedienteService);
 
   addExpediente(): boolean {
-    const expediente: Expediente = {
+    const expediente: any = {
       nombre: this.form.value.nombre,
       id: this.form.value.id,
       sexo: this.form.value.sexo,
@@ -70,7 +70,7 @@ export class ExpedienteFormComponent {
   }
 
   editarExpediente(): boolean {
-    const expediente: Expediente = {
+    const expediente: any = {
       nombre: this.form.value.nombre,
       id: this.form.value.id,
       sexo: this.form.value.sexo,

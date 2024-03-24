@@ -1,7 +1,8 @@
 export interface Expediente {
+  id: number;
   nombre: string;
-  id: string;
-  sexo: 'masculino' | 'femenino';
+  ci: string;
+  sexo: 'M' | 'F';
   direccion: string;
   enfermedades: string;
 }
