@@ -43,7 +43,10 @@ export class ExpedienteFormComponent {
     this.isEditMode = !!data.expediente;
     this.form = this.fb.group({
       nombre: [data.expediente?.nombre || '', Validators.required],
-      id: [data.expediente?.id || '', Validators.required],
+      id: [
+        data.expediente?.id || '',
+        [Validators.required, Validators.minLength(11)],
+      ],
       sexo: [data.expediente?.sexo || '', Validators.required],
       direccion: [data.expediente?.direccion || '', Validators.required],
       enfermedades: [data.expediente?.enfermedades || '', Validators.required],
