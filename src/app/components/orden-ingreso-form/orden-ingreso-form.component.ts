@@ -1,6 +1,7 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -23,6 +24,9 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { ExpedienteService } from '@/app/services/expediente.service';
+import { Expediente } from '@/app/interfaces/expediente.interface';
 
 @Component({
   selector: 'app-orden-ingreso-form',
@@ -34,14 +38,16 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatButtonModule,
     MatInputModule,
     MatDatepickerModule,
+    MatSelectModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './orden-ingreso-form.component.html',
   styleUrl: './orden-ingreso-form.component.css',
 })
-export class OrdenIngresoFormComponent {
+export class OrdenIngresoFormComponent implements OnInit {
   form: FormGroup;
   isEditMode: boolean;
+  listExpedientes!: Expediente[];
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -50,21 +56,41 @@ export class OrdenIngresoFormComponent {
     private fb: FormBuilder
   ) {
     this.isEditMode = !!data;
-    this.form = this.fb.group({
-      nombre: [
-        { value: data?.expediente.nombre || '', disabled: this.isEditMode },
-        Validators.required,
-      ],
-      ci: [
-        { value: data?.expediente.ci || '', disabled: this.isEditMode },
-        [Validators.required, Validators.minLength(11)],
-      ],
-      motivo: [data?.motivo || '', Validators.required],
-      sintomas: [data?.sintomas || '', Validators.required],
-      fecha: [data?.fecha || '', Validators.required],
-    });
+    if (this.isEditMode) {
+      // Para el modo de edición, incluye los campos necesarios para editar
+      this.form = this.fb.group({
+        nombre: [
+          { value: data.expediente.nombre, disabled: true },
+          Validators.required,
+        ],
+        ci: [
+          { value: data.expediente.ci, disabled: true },
+          [Validators.required, Validators.minLength(11)],
+        ],
+        motivo: [data.motivo, Validators.required],
+        sintomas: [data.sintomas, Validators.required],
+        fecha: [data.fecha, Validators.required],
+      });
+    } else {
+      // Para el modo de creación, incluye los campos necesarios para crear
+      this.form = this.fb.group({
+        selectedExpedienteId: ['', Validators.required],
+        motivo: ['', Validators.required],
+        sintomas: ['', Validators.required],
+        fecha: ['', Validators.required],
+      });
+    }
   }
   private readonly _ordenIngServ = inject(OrdenIngresoService);
+  private readonly _expedienteServ = inject(ExpedienteService);
+
+  ngOnInit(): void {
+    if (!this.isEditMode) {
+      this._expedienteServ.getAll().subscribe((res) => {
+        this.listExpedientes = res;
+      });
+    }
+  }
 
   private saveOrdenIngreso(): boolean {
     if (this.form.invalid) {
@@ -88,7 +114,7 @@ export class OrdenIngresoFormComponent {
       sintomas: this.form.value.sintomas,
       motivo: this.form.value.motivo,
       fecha: this.form.value.fecha,
-      expedienteId: 1, //To-Do
+      expedienteId: this.form.value.selectedExpedienteId,
     };
     this._ordenIngServ.create(ordenData).subscribe();
   }

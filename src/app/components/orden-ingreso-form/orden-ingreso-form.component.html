@@ -3,6 +3,7 @@
 </h2>
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    @if (isEditMode) {
     <mat-form-field>
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" />
@@ -11,6 +12,17 @@
       <mat-label>Carnet de Identidad</mat-label>
       <input matInput formControlName="ci" />
     </mat-form-field>
+    }@else {
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <mat-select formControlName="selectedExpedienteId">
+        @for (expediente of listExpedientes; track expediente.id) {
+        <mat-option [value]="expediente.id"
+          >{{ expediente.nombre }}
+        </mat-option>
+        }
+      </mat-select> </mat-form-field
+    >}
     <mat-form-field>
       <mat-label>Motivo</mat-label>
       <input matInput formControlName="motivo" />
