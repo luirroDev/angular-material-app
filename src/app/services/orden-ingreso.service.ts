@@ -1,68 +1,36 @@
-import { Injectable } from '@angular/core';
-import { OrdenIngreso } from '../interfaces/oden-ingreso.interface';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  CreateOrdenIngresoDTO,
+  UpdateOrdenIngresoDTO,
+  OrdenIngreso,
+} from '../interfaces/oden-ingreso.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrdenIngresoService {
-  private ordenIngreso_list: OrdenIngreso[] = [
-    {
-      nombre: 'Juan Perez',
-      id: '01031231071',
-      motivo: 'pendiente',
-      sintomas: 'fiebre',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Alexander Ramires',
-      id: '01031231070',
-      motivo: 'pendiente',
-      sintomas: 'vomitos',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Pedro Porro',
-      id: '01031231069',
-      motivo: 'pendiente',
-      sintomas: 'dolor de cabeza',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Pablo Diaz',
-      id: '01031231068',
-      motivo: 'pendiente',
-      sintomas: 'fiebre',
-      fecha: Date.now(),
-    },
-    {
-      nombre: 'Jose Gonzalez',
-      id: '01031231067',
-      motivo: 'pendiente',
-      sintomas: 'nauceas',
-      fecha: Date.now(),
-    },
-  ];
+  private readonly _http = inject(HttpClient);
+  private readonly url = 'http://localhost:3000/api/v1/orden-ingreso';
 
-  getOrdenIngreso() {
-    return this.ordenIngreso_list.slice();
+  getAll(): Observable<OrdenIngreso[]> {
+    return this._http.get<OrdenIngreso[]>(this.url);
   }
 
-  getOrdenByID(id: number) {
-    return this.ordenIngreso_list[id];
+  getByID(id: number): Observable<OrdenIngreso> {
+    return this._http.get<OrdenIngreso>(`${this.url}/${id}`);
   }
 
-  addOrdenIngreso(newOrdenIngreso: OrdenIngreso) {
-    this.ordenIngreso_list.unshift(newOrdenIngreso);
+  create(newOrdenIngreso: UpdateOrdenIngresoDTO) {
+    return this._http.post<OrdenIngreso>(this.url, newOrdenIngreso);
   }
 
-  updateOrdenIngreso(ordenIngreso: OrdenIngreso) {
-    const index = this.ordenIngreso_list.findIndex(
-      (item) => item.id === ordenIngreso.id
-    );
-    this.ordenIngreso_list[index] = ordenIngreso;
+  update(id: number, ordenChanges: UpdateOrdenIngresoDTO) {
+    return this._http.patch<OrdenIngreso>(`${this.url}/${id}`, ordenChanges);
   }
 
-  deleteOrdenIngreso(index: number) {
-    this.ordenIngreso_list.splice(index, 1);
+  delete(id: number) {
+    return this._http.delete(`${this.url}/${id}`);
   }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,12 +37,11 @@ export class OrdenIngresoComponent implements OnInit {
   private readonly _authSrv = inject(AuthService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly _dialogForm = inject(MatDialog);
-  listOrdenes!: OrdenIngreso[];
   dataSource!: MatTableDataSource<OrdenIngreso>;
 
   displayedColumns: string[] = [
     'nombre',
-    'id',
+    'ci',
     'motivo',
     'sintomas',
     'fecha',
@@ -61,51 +58,60 @@ export class OrdenIngresoComponent implements OnInit {
   }
 
   public loadOrdenes() {
-    this.listOrdenes = this._ordenServ.getOrdenIngreso();
-    this.dataSource = new MatTableDataSource(this.listOrdenes);
-  }
-
-  public eliminarOrden(index: number) {
-    this._dialogSrv
-      .confirm('¿Está seguro de eliminar esta orden de Ingreso?')
-      .subscribe((result) => {
-        if (result) {
-          this._ordenServ.deleteOrdenIngreso(index);
-          this.loadOrdenes();
-          this._snackBar.open(
-            'Orden de Ingreso eliminada con éxito',
-            undefined,
-            {
-              duration: 1500,
-              horizontalPosition: 'center',
-              verticalPosition: 'top',
-            }
-          );
-        }
-      });
+    this._ordenServ.getAll().subscribe((data) => {
+      this.dataSource = new MatTableDataSource(data);
+    });
   }
 
   public editarOrden(id: number) {
-    const ordenToUpdate = this._ordenServ.getOrdenByID(id);
-    this.openFormDialog('Editada', ordenToUpdate);
+    this._ordenServ.getByID(id).subscribe((data) => {
+      this.openFormDialog({ actionType: 'Editado', recordData: data });
+    });
   }
 
-  public openFormDialog(option: 'Agregada' | 'Editada', orden?: OrdenIngreso) {
+  public openFormDialog(options: {
+    actionType: 'Agregado' | 'Editado';
+    recordData?: OrdenIngreso;
+  }) {
     const dialogRef = this._dialogForm.open(OrdenIngresoFormComponent, {
       width: '600px',
-      data: { orden }, // Se pueden pasar datos iniciales aquí si es necesario
+      data: options.recordData, // Se pueden pasar datos iniciales aquí si es necesario
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.loadOrdenes();
-        this._snackBar.open(`Orden de Ingreso ${option} con éxito`, undefined, {
-          duration: 1500,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        });
+        this._snackBar.open(
+          `Orden de Ingreso ${options.actionType} con éxito`,
+          undefined,
+          {
+            duration: 1500,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          }
+        );
       }
     });
+  }
+
+  public eliminarOrden(id: number) {
+    this._dialogSrv
+      .confirm('¿Está seguro de eliminar esta Orden de Ingreso?')
+      .subscribe((result) => {
+        if (result) {
+          this._ordenServ.delete(id).subscribe(() => {
+            this.loadOrdenes();
+            this._snackBar.open(
+              'Orden de Ingreso eliminada con éxito',
+              undefined,
+              {
+                duration: 1500,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              }
+            );
+          });
+        }
+      });
   }
 
   public isAdmin(): boolean {

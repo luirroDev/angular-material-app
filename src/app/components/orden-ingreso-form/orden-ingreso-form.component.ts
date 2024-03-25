@@ -6,7 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { OrdenIngresoService } from '../../services/orden-ingreso.service';
-import { OrdenIngreso } from '../../interfaces/oden-ingreso.interface';
+import {
+  CreateOrdenIngresoDTO,
+  OrdenIngreso,
+  UpdateOrdenIngresoDTO,
+} from '../../interfaces/oden-ingreso.interface';
 
 // material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,66 +41,60 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 })
 export class OrdenIngresoFormComponent {
   form: FormGroup;
-  isEditMode = !!this.data;
+  isEditMode: boolean;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public data: OrdenIngreso,
     public dialogRef: MatDialogRef<OrdenIngresoFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { orden?: OrdenIngreso },
     private fb: FormBuilder
   ) {
-    this.isEditMode = !!data.orden;
+    this.isEditMode = !!data;
     this.form = this.fb.group({
-      nombre: [data.orden?.nombre || '', Validators.required],
-      id: [
-        data.orden?.id || '',
+      nombre: [
+        { value: data?.expediente.nombre || '', disabled: this.isEditMode },
+        Validators.required,
+      ],
+      ci: [
+        { value: data?.expediente.ci || '', disabled: this.isEditMode },
         [Validators.required, Validators.minLength(11)],
       ],
-      motivo: [data.orden?.motivo || '', Validators.required],
-      sintomas: [data.orden?.sintomas || '', Validators.required],
-      fecha: [data.orden?.fecha || '', Validators.required],
+      motivo: [data?.motivo || '', Validators.required],
+      sintomas: [data?.sintomas || '', Validators.required],
+      fecha: [data?.fecha || '', Validators.required],
     });
   }
   private readonly _ordenIngServ = inject(OrdenIngresoService);
 
-  addOrdenIngreso(): boolean {
-    const ordenIngreso: OrdenIngreso = {
-      nombre: this.form.value.nombre,
-      id: this.form.value.id,
-      motivo: this.form.value.motivo,
-      sintomas: this.form.value.sintomas,
-      fecha: this.form.value.fecha,
-    };
-    if (!this.form.invalid) {
-      this._ordenIngServ.addOrdenIngreso(ordenIngreso);
-      return true;
+  private saveOrdenIngreso(): boolean {
+    if (this.form.invalid) {
+      return false;
     }
-    return false;
+    this.isEditMode ? this.updateOrden() : this.createOrden();
+    return true;
   }
 
-  editarOrdenIngreso(): boolean {
-    const ordenIngreso: OrdenIngreso = {
-      nombre: this.form.value.nombre,
-      id: this.form.value.id,
-      motivo: this.form.value.motivo,
+  private updateOrden() {
+    const ordenData: UpdateOrdenIngresoDTO = {
       sintomas: this.form.value.sintomas,
+      motivo: this.form.value.motivo,
       fecha: this.form.value.fecha,
     };
-    if (!this.form.invalid) {
-      this._ordenIngServ.updateOrdenIngreso(ordenIngreso);
-      return true;
-    }
-    return false;
+    this._ordenIngServ.update(this.data.id, ordenData).subscribe();
+  }
+
+  private createOrden() {
+    const ordenData: CreateOrdenIngresoDTO = {
+      sintomas: this.form.value.sintomas,
+      motivo: this.form.value.motivo,
+      fecha: this.form.value.fecha,
+      expedienteId: 1, //To-Do
+    };
+    this._ordenIngServ.create(ordenData).subscribe();
   }
 
   onSubmit() {
-    let result = false;
-    if (this.isEditMode) {
-      // Lógica para editar la orden de ingreso
-      result = this.editarOrdenIngreso();
-    } else {
-      // Lógica para agregar una nueva orden de ingreso
-      result = this.addOrdenIngreso();
-    }
+    let result = this.saveOrdenIngreso();
     this.dialogRef.close(result);
   }
 }

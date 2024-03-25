@@ -15,12 +15,14 @@
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="nombre">
       <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.expediente.nombre }}
+      </td>
     </ng-container>
 
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="ci">
       <th mat-header-cell *matHeaderCellDef>Carnet de Identidad</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.expediente.ci }}</td>
     </ng-container>
 
     <ng-container matColumnDef="motivo">
@@ -43,7 +45,7 @@
       <th mat-header-cell *matHeaderCellDef style="text-align: center">
         Acciones
       </th>
-      <td mat-cell *matCellDef="let element; let i = index" class="actions">
+      <td mat-cell *matCellDef="let element" class="actions">
         <button
           mat-icon-button
           matTooltip="Ver"
@@ -59,7 +61,7 @@
           aria-hidden="false"
           aria-label="Editar"
           class="edit"
-          (click)="editarOrden(i)"
+          (click)="editarOrden(element.id)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -70,7 +72,7 @@
           aria-hidden="false"
           aria-label="Eliminar"
           class="delete"
-          (click)="eliminarOrden(i)"
+          (click)="eliminarOrden(element.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -86,7 +88,7 @@
     mat-icon-button
     matTooltip="Agregar Orden de Ingreso"
     class="add-button"
-    (click)="openFormDialog('Agregada')"
+    (click)="openFormDialog({ actionType: 'Agregado' })"
   >
     <mat-icon>add_circle</mat-icon>
   </button>
