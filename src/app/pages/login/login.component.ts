@@ -66,11 +66,4 @@ export class LoginBootstrapComponent {
       password: '',
     });
   }
-
-  // private fakeLoading() {
-  //   this.loading = true;
-  //   setTimeout(() => {
-  //     this.router.navigate(['dashboard']);
-  //   }, 1500);
-  // }
 }
