@@ -1,30 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { User } from '../interfaces/user.interface';
+import { HttpClient } from '@angular/common/http';
+import { tap } from 'rxjs';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  login(user: User) {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  private readonly url = 'http://localhost:3000/api/v1/auth';
+  private readonly tokenSrv = inject(TokenService);
+  private readonly _http = inject(HttpClient);
+
+  public login(email: string, password: string) {
+    return this._http
+      .post<any>(`${this.url}/login`, { email, password })
+      .pipe(tap((response) => this.tokenSrv.saveToken(response.access_token)));
   }
 
-  getAuthenticatedUser(): User | null {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      return JSON.parse(storedUser);
-    } else return null;
-  }
-
-  logout() {
-    localStorage.removeItem('currentUser');
-  }
-
-  isAuthenticated(): boolean {
-    return this.getAuthenticatedUser !== null;
-  }
-
-  isAdmin() {
-    return this.getAuthenticatedUser()?.role === 'admin';
+  public logout() {
+    this.tokenSrv.removeToken();
   }
 }

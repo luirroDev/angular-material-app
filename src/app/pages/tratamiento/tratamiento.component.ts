@@ -106,8 +106,4 @@ export class TratamientoComponent implements OnInit {
         }
       });
   }
-
-  public isAdmin(): boolean {
-    return this._authSrv.isAdmin();
-  }
 }

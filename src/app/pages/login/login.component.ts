@@ -40,13 +40,9 @@ export class LoginBootstrapComponent {
     const password: string = this.form.value.password;
 
     const user = this._userServ.getByEmail(email);
-
-    if (email === user?.email && password === user.password) {
-      this.fakeLoading();
-      this._authServ.login(user);
-    } else {
-      this.errorHandler();
-    }
+    this._authServ.login(email, password).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   private errorHandler() {

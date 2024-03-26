@@ -20,7 +20,7 @@ export class NavbarComponent {
   private readonly router = inject(Router);
 
   ngOnInit(): void {
-    this.currentUser = this._authSrv.getAuthenticatedUser();
+    // this.currentUser = this._authSrv.getAuthenticatedUser();
   }
 
   sesionLogout() {

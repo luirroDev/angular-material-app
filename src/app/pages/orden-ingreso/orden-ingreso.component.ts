@@ -113,8 +113,4 @@ export class OrdenIngresoComponent implements OnInit {
         }
       });
   }
-
-  public isAdmin(): boolean {
-    return this._authSrv.isAdmin();
-  }
 }
