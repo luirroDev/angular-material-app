@@ -1,7 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { User } from '../interfaces/user.interface';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { Auth } from '../interfaces/user.interface';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpStatusCode,
+} from '@angular/common/http';
+import { catchError, tap, throwError } from 'rxjs';
 import { TokenService } from './token.service';
 
 @Injectable({
@@ -13,9 +17,15 @@ export class AuthService {
   private readonly _http = inject(HttpClient);
 
   public login(email: string, password: string) {
-    return this._http
-      .post<any>(`${this.url}/login`, { email, password })
-      .pipe(tap((response) => this.tokenSrv.saveToken(response.access_token)));
+    return this._http.post<Auth>(`${this.url}/login`, { email, password }).pipe(
+      tap((response) => this.tokenSrv.saveToken(response.access_token)),
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === HttpStatusCode.Unauthorized) {
+          return throwError('Usuario o contraseña incorrectos');
+        }
+        return throwError(error);
+      })
+    );
   }
 
   public logout() {

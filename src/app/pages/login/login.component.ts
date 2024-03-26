@@ -22,7 +22,6 @@ export class LoginBootstrapComponent {
   private readonly _authServ = inject(AuthService);
   hide = true;
   form: FormGroup;
-  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -35,18 +34,28 @@ export class LoginBootstrapComponent {
     });
   }
 
+  statusDetail: 'loading' | 'success' | 'error' | 'init' = 'init';
+
   public login() {
+    this.statusDetail = 'loading';
     const email: string = this.form.value.user;
     const password: string = this.form.value.password;
 
     const user = this._userServ.getByEmail(email);
-    this._authServ.login(email, password).subscribe((res) => {
-      console.log(res);
-    });
+    this._authServ.login(email, password).subscribe(
+      (res) => {
+        this.statusDetail = 'success';
+        this.router.navigate(['dashboard']);
+      },
+      (errorMsg) => {
+        this.statusDetail = 'error';
+        this.errorHandler(errorMsg);
+      }
+    );
   }
 
-  private errorHandler() {
-    this._snackBar.open('Usuario o contraseña incorrectos', undefined, {
+  private errorHandler(errorMsg: string) {
+    this._snackBar.open(errorMsg, undefined, {
       duration: 3000,
       horizontalPosition: 'center',
       verticalPosition: 'top',
@@ -58,10 +67,10 @@ export class LoginBootstrapComponent {
     });
   }
 
-  private fakeLoading() {
-    this.loading = true;
-    setTimeout(() => {
-      this.router.navigate(['dashboard']);
-    }, 1500);
-  }
+  // private fakeLoading() {
+  //   this.loading = true;
+  //   setTimeout(() => {
+  //     this.router.navigate(['dashboard']);
+  //   }, 1500);
+  // }
 }
