@@ -23,4 +23,9 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+  // {
+  //   "nombre": "Tratamiento",
+  //   "redirect": "/dashboard/tratamiento",
+  //   "icon": "medical_services"
+  // },
 ];

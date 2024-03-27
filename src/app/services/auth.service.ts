@@ -28,6 +28,10 @@ export class AuthService {
     );
   }
 
+  public profile() {
+    return this._http.get(`${this.url}/profile`);
+  }
+
   public logout() {
     this.tokenSrv.removeToken();
   }

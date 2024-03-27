@@ -41,7 +41,6 @@ export class LoginBootstrapComponent {
     const email: string = this.form.value.user;
     const password: string = this.form.value.password;
 
-    const user = this._userServ.getByEmail(email);
     this._authServ.login(email, password).subscribe(
       (res) => {
         this.statusDetail = 'success';
