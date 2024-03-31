@@ -6,15 +6,29 @@ import { OrdenIngresoComponent } from '../../pages/orden-ingreso/orden-ingreso.c
 import { TratamientoComponent } from '../../pages/tratamiento/tratamiento.component';
 import { ExpedienteComponent } from '../../pages/expediente/expediente.component';
 
+import { authGuard } from '@/app/guards/auth.guard';
+
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'orden-ingreso', component: OrdenIngresoComponent },
-      { path: 'tratamiento', component: TratamientoComponent },
-      { path: 'expediente', component: ExpedienteComponent },
+      {
+        path: 'orden-ingreso',
+        canActivate: [authGuard],
+        component: OrdenIngresoComponent,
+      },
+      {
+        path: 'tratamiento',
+        canActivate: [authGuard],
+        component: TratamientoComponent,
+      },
+      {
+        path: 'expediente',
+        canActivate: [authGuard],
+        component: ExpedienteComponent,
+      },
     ],
   },
 ];
