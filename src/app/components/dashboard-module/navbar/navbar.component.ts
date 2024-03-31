@@ -1,30 +1,35 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '@/app/interfaces/user.interface';
-import { AuthService } from '@/app/services/auth.service';
+import { ComunicationService } from '@/app/services/comunication.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
+    RouterLink,
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
-  currentUser: User | null = null;
-
-  private readonly _authSrv = inject(AuthService);
+export class NavbarComponent implements OnInit {
+  public currentUser: User | null = null;
   private readonly router = inject(Router);
+  private readonly communicationSrv = inject(ComunicationService);
 
   ngOnInit(): void {
-    // this.currentUser = this._authSrv.getAuthenticatedUser();
+    this.communicationSrv.currentUser.subscribe((user) => {
+      this.currentUser = user;
+    });
   }
 
-  sesionLogout() {
-    this._authSrv.logout();
-    this.router.navigate(['login']);
-  }
+  sesionLogout() {}
 }

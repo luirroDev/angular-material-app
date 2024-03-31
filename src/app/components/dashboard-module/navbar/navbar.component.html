@@ -5,16 +5,29 @@
   </div>
   <div class="auth-options">
     @if(currentUser) {
-    <a href="/dashboard">{{ currentUser.email }}</a>
-    }
+    <div class="login-user">
+      <a>{{ currentUser.email }}</a>
+      <button
+        mat-icon-button
+        aria-hidden="false"
+        aria-label="Cerrar sesión"
+        type="button"
+        matTooltip="Cerrar Sesión"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+    } @else {
     <button
       mat-icon-button
       aria-hidden="false"
-      aria-label="Cerrar sesión"
+      aria-label="Iniciar sesión"
       type="button"
-      (click)="sesionLogout()"
+      matTooltip="Iniciar Sesión"
+      routerLink="/login"
     >
-      <mat-icon>logout</mat-icon>
+      <mat-icon>login</mat-icon>
     </button>
+    }
   </div>
 </mat-toolbar>

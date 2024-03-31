@@ -16,12 +16,10 @@ mat-toolbar img {
   justify-content: space-around;
   width: 20%;
 }
-
-.auth-options {
-  width: 200px;
+.login-user {
   display: flex;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-between;
 }
 
 .auth-options a {
