@@ -14,6 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { OrdenIngresoFormComponent } from '../../components/orden-ingreso-form/orden-ingreso-form.component';
 import { AuthService } from '../../services/auth.service';
+import { User } from '@/app/interfaces/user.interface';
+import { ComunicationService } from '@/app/services/comunication.service';
 
 @Component({
   selector: 'app-users',
@@ -37,6 +39,8 @@ export class OrdenIngresoComponent implements OnInit {
   private readonly _authSrv = inject(AuthService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly _dialogForm = inject(MatDialog);
+  private readonly communicationSrv = inject(ComunicationService);
+  public currentUser: User | null = null;
   dataSource!: MatTableDataSource<OrdenIngreso>;
 
   displayedColumns: string[] = [
@@ -49,6 +53,9 @@ export class OrdenIngresoComponent implements OnInit {
   ];
 
   public ngOnInit(): void {
+    this.communicationSrv.currentUser.subscribe((user) => {
+      this.currentUser = user;
+    });
     this.loadOrdenes();
   }
 
@@ -112,5 +119,8 @@ export class OrdenIngresoComponent implements OnInit {
           });
         }
       });
+  }
+  public isAdmin() {
+    return this.currentUser?.role === 'admin' ? true : false;
   }
 }

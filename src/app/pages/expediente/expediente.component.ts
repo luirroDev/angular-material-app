@@ -14,7 +14,8 @@ import { DeleteConfirmationService } from '../../services/delete-confirmation.se
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ExpedienteFormComponent } from '../../components/expediente-form/expediente-form.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from '../../services/auth.service';
+import { User } from '@/app/interfaces/user.interface';
+import { ComunicationService } from '@/app/services/comunication.service';
 
 @Component({
   selector: 'app-expediente',
@@ -36,7 +37,8 @@ export class ExpedienteComponent implements OnInit {
   private readonly _dialogSrv = inject(DeleteConfirmationService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly _dialogForm = inject(MatDialog);
-  private readonly _authSrv = inject(AuthService);
+  private readonly communicationSrv = inject(ComunicationService);
+  public currentUser: User | null = null;
 
   listExpedientes: Expediente[] = [];
   dataSource!: MatTableDataSource<Expediente>;
@@ -51,6 +53,9 @@ export class ExpedienteComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.communicationSrv.currentUser.subscribe((user) => {
+      this.currentUser = user;
+    });
     this.loadExpedientes();
   }
 
@@ -111,5 +116,9 @@ export class ExpedienteComponent implements OnInit {
           });
         }
       });
+  }
+
+  public isAdmin() {
+    return this.currentUser?.role === 'admin' ? true : false;
   }
 }

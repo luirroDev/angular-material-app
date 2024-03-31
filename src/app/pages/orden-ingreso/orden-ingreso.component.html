@@ -55,6 +55,7 @@
         >
           <mat-icon>search</mat-icon>
         </button>
+        @if (isAdmin()) {
         <button
           mat-icon-button
           matTooltip="Editar"
@@ -75,6 +76,7 @@
         >
           <mat-icon>delete</mat-icon>
         </button>
+        }
       </td>
     </ng-container>
 
