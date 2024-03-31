@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth } from '../interfaces/user.interface';
+import { Auth, User } from '../interfaces/user.interface';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -28,8 +28,12 @@ export class AuthService {
     );
   }
 
-  public profile() {
-    return this._http.get(`${this.url}/profile`);
+  public profile(token: string) {
+    return this._http.get<User>(`${this.url}/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 
   public logout() {

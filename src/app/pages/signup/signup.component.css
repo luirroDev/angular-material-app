@@ -13,8 +13,14 @@ h1 {
   width: 100vw;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #625bfe 0%, #332e92 90%);
-  background-color: var(--primary);
+
+  background: var(--violet);
+  background: -webkit-linear-gradient(
+    to right,
+    var(--violet),
+    var(--primary-dark)
+  );
+  background: linear-gradient(to right, var(--violet), var(--primary-dark));
 }
 
 .socials-row {
@@ -29,7 +35,7 @@ h1 {
 }
 
 .socials-row > a {
-  background-color: var(--secondary);
+  background-color: var(--aura);
   border-radius: 0.5rem;
   width: 100%;
   min-height: 3rem;

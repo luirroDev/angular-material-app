@@ -5,17 +5,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login-bootstrap',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, RouterLink],
 })
 export class LoginBootstrapComponent {
   private readonly _userServ = inject(UserService);
@@ -29,7 +29,7 @@ export class LoginBootstrapComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      user: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -38,11 +38,11 @@ export class LoginBootstrapComponent {
 
   public login() {
     this.statusDetail = 'loading';
-    const email: string = this.form.value.user;
+    const email: string = this.form.value.email;
     const password: string = this.form.value.password;
 
     this._authServ.login(email, password).subscribe(
-      (res) => {
+      () => {
         this.statusDetail = 'success';
         this.router.navigate(['dashboard']);
       },
