@@ -1,13 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #625bfe;
+  --primary-hover: #7771f7;
+  --text: #383740;
+  --text-lighter: #71707d;
+}
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
-html,
 body {
-  height: 100%;
-}
-body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 

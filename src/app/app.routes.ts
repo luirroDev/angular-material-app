@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { LoginBootstrapComponent } from './pages/login/login.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'sign-up',
     pathMatch: 'full',
   },
   {
@@ -19,8 +20,12 @@ export const routes: Routes = [
     component: LoginBootstrapComponent,
   },
   {
+    path: 'sign-up',
+    component: SignupComponent,
+  },
+  {
     path: '**',
-    redirectTo: 'login',
+    redirectTo: 'sign-up',
     pathMatch: 'full',
   },
   // {
