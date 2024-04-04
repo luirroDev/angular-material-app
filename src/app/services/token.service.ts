@@ -17,4 +17,8 @@ export class TokenService {
   public removeToken() {
     localStorage.removeItem('token');
   }
+
+  public isAuthenticated(): boolean {
+    return this.getToken() ? true : false;
+  }
 }
