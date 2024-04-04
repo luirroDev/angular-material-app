@@ -40,9 +40,14 @@ export class SignupComponent {
   signup() {
     if (this.form.valid) {
       const user: CreateUserDTO = this.form.value;
-      this.userServ.create(user).subscribe((res) => {
-        this.router.navigate(['login']);
-      });
+      this.userServ.create(user).subscribe(
+        (res) => {
+          this.router.navigate(['login']);
+        },
+        (errMsg) => {
+          this.errorHandler(errMsg);
+        }
+      );
     } else {
       this.errorHandler('Email o contraseña incorrecto');
     }
